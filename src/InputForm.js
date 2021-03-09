@@ -4,84 +4,98 @@ import {
     Grid,
     Paper,
     TextField,
-    FormLabel,
-    FormControlLabel,
-    Radio,
-    RadioGroup,
+    InputLabel,
+    Select,
 } from "@material-ui/core";
 import React, { Component } from "react";
 
 export default class InputForm extends Component {
     constructor(props) {
         super(props);
+        // this.classes = useStyles();
 
         this.handleChange = this.props.onChange.bind(this);
         this.handleSubmit = this.props.onSubmit.bind(this);
+        // console.log(this.props.dropdownFields);
+        this.dropdownElements = this.props.dropdownFields.map((name, key) => (
+            <option key={key} value={name}>
+                {name}
+            </option>
+        ));
     }
 
     render() {
+        // console.log(this.dropdownElements);
+
         return (
-            <form onSubmit={this.handleSubmit}>
-                <Paper style={{ padding: 10, margin: 30 }} elevation={3}>
-                    <FormControl>
-                        <FormControl component="fieldset">
-                            <FormLabel component="legend">Algorithm</FormLabel>
-                            <RadioGroup
-                                aria-label="algorithm"
-                                name="radioValue"
-                                value={this.props.radioValue}
-                                onChange={this.handleChange}
-                            >
-                                <FormControlLabel
-                                    value="naive"
-                                    control={<Radio />}
-                                    label="Brute Force"
-                                />
-                                <FormControlLabel
-                                    value="kmp"
-                                    control={<Radio />}
-                                    label="Knuth-Morris-Pratt"
-                                />
-                                <FormControlLabel
-                                    value="bm"
-                                    control={<Radio />}
-                                    label="Boyer-Moore"
-                                />
-                            </RadioGroup>
-                        </FormControl>
-                        <Grid
-                            direction="row"
-                            alignItems="center"
-                            style={{ padding: 10 }}
-                        >
-                            <TextField
-                                required
-                                name="needleValue"
-                                variant="outlined"
-                                label="Needle"
-                                value={this.props.needleValue}
-                                onChange={this.handleChange}
-                            ></TextField>
-                            <TextField
-                                required
-                                name="haystackValue"
-                                variant="outlined"
-                                label="Haystack"
-                                value={this.props.haystackValue}
-                                onChange={this.handleChange}
-                            ></TextField>
-                            <Button
-                                variant="contained"
-                                size="medium"
-                                type="submit"
-                                color="primary"
-                            >
-                                Submit
-                            </Button>
+            <Paper
+                style={{
+                    padding: this.props.theme.spacing(2),
+                    margin: this.props.theme.spacing(1),
+                }}
+                height="100%"
+                elevation={3}
+                variant="outlined"
+            >
+                <form onSubmit={this.handleSubmit}>
+                    <Grid container spacing={3}>
+                        <Grid item xs={12} sm={5}>
+                            <FormControl fullWidth>
+                                <TextField
+                                    autoComplete="off"
+                                    required
+                                    name="needleValue"
+                                    variant="outlined"
+                                    label="Needle"
+                                    value={this.props.needleValue}
+                                    onChange={this.handleChange}
+                                ></TextField>
+                            </FormControl>
                         </Grid>
-                    </FormControl>
-                </Paper>
-            </form>
+                        <Grid item xs={12} sm={7}>
+                            <FormControl fullWidth>
+                                <TextField
+                                    autoComplete="off"
+                                    required
+                                    name="haystackValue"
+                                    variant="outlined"
+                                    label="Haystack"
+                                    value={this.props.haystackValue.toUpperCase()}
+                                    onChange={this.handleChange}
+                                ></TextField>
+                            </FormControl>
+                        </Grid>
+
+                        <Grid item sm={9} xs={12}>
+                            <FormControl variant="outlined" fullWidth>
+                                <InputLabel>Algorithm</InputLabel>
+                                <Select
+                                    native
+                                    value={this.props.radioValue}
+                                    name="radioValue"
+                                    label="Algorithm"
+                                    onChange={this.handleChange}
+                                >
+                                    {this.dropdownElements}
+                                </Select>
+                            </FormControl>
+                        </Grid>
+                        <Grid item xs={12} sm={3}>
+                            <FormControl fullWidth>
+                                <Button
+                                    variant="contained"
+                                    size="large"
+                                    type="submit"
+                                    color="primary"
+                                    style={{ minHeight: "56px" }}
+                                >
+                                    Submit
+                                </Button>
+                            </FormControl>
+                        </Grid>
+                    </Grid>
+                </form>
+            </Paper>
         );
     }
 }
