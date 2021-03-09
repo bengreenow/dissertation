@@ -1,11 +1,4 @@
-import {
-    Grid,
-    IconButton,
-    LinearProgress,
-    Paper,
-    Slider,
-    Typography,
-} from "@material-ui/core";
+import { Grid, IconButton, Paper, Slider, Typography } from "@material-ui/core";
 import React, { Component } from "react";
 import {
     NavigateBefore,
