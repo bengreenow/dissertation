@@ -1,4 +1,13 @@
-import { Grid, IconButton, Paper, Slider, Typography } from "@material-ui/core";
+import {
+    Grid,
+    IconButton,
+    LinearProgress,
+    makeStyles,
+    Paper,
+    Slider,
+    Typography,
+    withStyles,
+} from "@material-ui/core";
 import React, { Component } from "react";
 import {
     NavigateBefore,
@@ -8,16 +17,24 @@ import {
     Replay,
 } from "@material-ui/icons";
 
-export default class Controls extends Component {
+const styles = {
+    bar: {
+        transitionTimingFunction: "ease-in-out",
+        transitionDuration: "0.2s",
+    },
+};
+
+class Controls extends Component {
     constructor(props) {
         super(props);
-
         this.state = {};
         this.handlePlayPause = this.props.onPlayPause.bind(this);
         this.handleSliderChange = this.props.onSliderChange.bind(this);
+        this.handleControlChange = this.props.onControlChange.bind(this);
     }
 
     render() {
+        const { classes } = this.props;
         return (
             <Paper
                 style={{
@@ -35,7 +52,9 @@ export default class Controls extends Component {
                     alignItems="center"
                 >
                     <Grid item zeroMinWidth>
-                        <IconButton>
+                        <IconButton
+                            onClick={() => this.handleControlChange("prev")}
+                        >
                             <NavigateBefore aria-label="previous step"></NavigateBefore>
                         </IconButton>
                         <IconButton
@@ -48,11 +67,15 @@ export default class Controls extends Component {
                                 <PlayArrow color="primary"></PlayArrow>
                             )}
                         </IconButton>
-                        <IconButton>
+                        <IconButton
+                            onClick={() => this.handleControlChange("next")}
+                        >
                             <NavigateNext aria-label="next step"></NavigateNext>
                         </IconButton>
-                        <IconButton>
-                            <Replay aria-label="next step"></Replay>
+                        <IconButton
+                            onClick={() => this.handleControlChange("reset")}
+                        >
+                            <Replay aria-label="previous step"></Replay>
                         </IconButton>
                     </Grid>
                     <Grid
@@ -76,8 +99,14 @@ export default class Controls extends Component {
                     </Grid>
                 </Grid>
 
-                {/* <LinearProgress variant="determinate" value={10} /> */}
+                <LinearProgress
+                    classes={{ bar: classes.bar }}
+                    variant="determinate"
+                    value={this.props.progress}
+                />
             </Paper>
         );
     }
 }
+
+export default withStyles(styles)(Controls);

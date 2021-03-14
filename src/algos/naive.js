@@ -35,14 +35,22 @@ export function naiveSearch(needle, haystack) {
         needle: needle.split("").map((char) => {
             return { char: char, highlight: false };
         }),
-        needleOffset: 3,
+        needleOffset: 0,
     };
     let stepOutput = [];
     while (true) {
         // keep adding steps until complete (dangerous)
         stepOutput.push(initialStep);
+        stepOutput.push({ ...initialStep, needleOffset: 7 });
+        stepOutput.push({
+            ...initialStep,
+            needleOffset: 8,
+            haystack: [...haystack, { char: "A", highlight: true }],
+        });
+        stepOutput.push({ ...initialStep, needleOffset: 1 });
         stepOutput.push({ ...initialStep, needleOffset: 3 });
-        stepOutput.push(initialStep);
+        stepOutput.push({ ...initialStep, needleOffset: 4 });
+        stepOutput.push({ ...initialStep, needleOffset: 36 });
         break;
     }
 

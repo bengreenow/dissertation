@@ -7,6 +7,10 @@ import { naiveSearch } from "./algos/naive.js";
 import PseudocodeCanvas from "./PseudocodeCanvas";
 import Controls from "./Controls";
 
+const scale = (num, in_min, in_max, out_min, out_max) => {
+    return ((num - in_min) * (out_max - out_min)) / (in_max - in_min) + out_min;
+};
+
 class App extends React.Component {
     constructor(props) {
         super(props);
@@ -27,7 +31,6 @@ class App extends React.Component {
             stepDuration: 300,
             stepIndex: 0,
             stepCurrent: 0,
-            stepMax: 0,
             stepArray: naiveSearch("ABA", "ABBBABA"),
             isPlaying: false,
         };
@@ -43,6 +46,7 @@ class App extends React.Component {
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handlePlayPause = this.handlePlayPause.bind(this);
         this.handleSliderChange = this.handleSliderChange.bind(this);
+        this.handleControlChange = this.handleControlChange.bind(this);
 
         this.theme = createMuiTheme({
             spacing: 8,
@@ -63,10 +67,43 @@ class App extends React.Component {
         }));
     }
 
-    handleControlChange(event) {}
+    handleControlChange(event) {
+        switch (event) {
+            case "next":
+                this.setState((prevState) => ({
+                    stepIndex: Math.min(
+                        prevState.stepIndex + 1,
+                        prevState.stepArray.length - 1
+                    ),
+                }));
+                console.log(event);
+                break;
+            case "prev":
+                this.setState((prevState) => ({
+                    stepIndex: Math.max(prevState.stepIndex - 1, 0),
+                }));
+                break;
+            case "reset":
+                this.setState({ stepIndex: 0 });
+                break;
+            default:
+                console.log("this should not have happened", event);
+                break;
+        }
+        console.log(
+            this.state.stepIndex,
+            "i",
+            this.state.stepArray.length,
+            "array length"
+        );
+        console.log(
+            scale(this.state.stepIndex, 0, this.state.stepArray.length, 0, 100),
+            "percent"
+        );
+    }
 
     handleSliderChange(event, newValue) {
-        // console.log(newValue);
+        console.log(this.state);
         this.setState({
             sliderValue: newValue,
         });
@@ -87,16 +124,6 @@ class App extends React.Component {
         this.setState((prevState) => ({
             stepArray: s,
         }));
-
-        console.log(this.state.stepArray);
-        // console.log(
-        //     this.functionMap[this.state.radioValue](
-        //         this.state.needleValue,
-        //         this.state.haystackValue
-        //     ),
-        //     "functionmapoutput^"
-        // );
-
         event.preventDefault();
     }
 
@@ -126,8 +153,16 @@ class App extends React.Component {
                             theme={this.theme}
                             onPlayPause={this.handlePlayPause}
                             isPlaying={this.state.isPlaying}
+                            onControlChange={this.handleControlChange}
                             onSliderChange={this.handleSliderChange}
                             sliderValue={this.state.sliderValue}
+                            progress={scale(
+                                this.state.stepIndex,
+                                0,
+                                this.state.stepArray.length - 1,
+                                0,
+                                100
+                            )}
                         ></Controls>
                     </Grid>
                     <Grid item xs={12} sm={8}>

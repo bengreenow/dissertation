@@ -27,6 +27,11 @@ export default class AnimationCanvas extends Component {
                 height="100%"
                 elevation={3}
             >
+                <div style={{ width: "100%", marginBottom: "1em" }}>
+                    {this.props.stepIndex + 1}/{this.props.stepArray.length}
+                    {" " +
+                        this.props.stepArray[this.props.stepIndex].needleOffset}
+                </div>
                 <div>
                     {console.log(
                         this.props.stepArray[this.props.stepIndex],
@@ -49,7 +54,9 @@ export default class AnimationCanvas extends Component {
                     animate={{
                         x:
                             this.props.stepArray[this.props.stepIndex]
-                                .needleOffset * OFFSET_SCALE,
+                                .needleOffset *
+                                1.81 +
+                            "em",
                     }}
                 >
                     {this.props.stepArray[this.props.stepIndex].needle.map(
