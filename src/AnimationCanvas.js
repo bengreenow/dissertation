@@ -56,6 +56,10 @@ export default class AnimationCanvas extends Component {
                                 1.81 +
                             "em",
                     }}
+                    transition={{
+                        duration: 0.7,
+                        type: "spring",
+                    }}
                 >
                     {this.props.stepArray[this.props.stepIndex].needle.map(
                         (char, i) => {

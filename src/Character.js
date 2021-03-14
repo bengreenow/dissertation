@@ -16,6 +16,9 @@ export default class Character extends Component {
                 animate={{
                     x: this.props.slider * 100,
                 }}
+                transition={{
+                    duration: 2,
+                }}
                 className={
                     this.props.highlight
                         ? `${this.classes} highlight`
