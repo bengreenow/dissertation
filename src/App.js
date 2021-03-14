@@ -21,13 +21,14 @@ class App extends React.Component {
                 "Knuth-Morris-Pratt",
                 "Boyer-Moore",
             ],
+
             sliderValue: 1,
             code: "test",
             stepDuration: 300,
             stepIndex: 0,
-            stepCurrent: 0, // could just be the step object
+            stepCurrent: 0,
             stepMax: 0,
-            stepArray: [],
+            stepArray: naiveSearch("ABA", "ABBBABA"),
             isPlaying: false,
         };
 
@@ -72,16 +73,29 @@ class App extends React.Component {
     }
 
     handleSubmit(event) {
-        this.setState({
+        event.preventDefault();
+        this.setState((prevState) => ({
             result: [this.state.haystackValue.search(this.state.needleValue)],
-        });
+        }));
 
-        console.log(
-            this.functionMap[this.state.radioValue](
-                this.state.needleValue,
-                this.state.haystackValue
-            )
+        const s = this.functionMap[this.state.radioValue](
+            this.state.needleValue.toUpperCase(),
+            this.state.haystackValue.toUpperCase()
         );
+        console.log(s, "s");
+
+        this.setState((prevState) => ({
+            stepArray: s,
+        }));
+
+        console.log(this.state.stepArray);
+        // console.log(
+        //     this.functionMap[this.state.radioValue](
+        //         this.state.needleValue,
+        //         this.state.haystackValue
+        //     ),
+        //     "functionmapoutput^"
+        // );
 
         event.preventDefault();
     }
@@ -92,7 +106,6 @@ class App extends React.Component {
         this.setState({
             [event.target.name]: event.target.value,
         });
-        // console.log
     }
 
     render() {
@@ -120,6 +133,7 @@ class App extends React.Component {
                     <Grid item xs={12} sm={8}>
                         <AnimationCanvas
                             stepArray={this.state.stepArray}
+                            stepIndex={this.state.stepIndex}
                             needle={this.state.needleValue.toUpperCase()}
                             haystack={this.state.haystackValue.toUpperCase()}
                             result={this.state.result}

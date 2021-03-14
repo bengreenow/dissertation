@@ -47,7 +47,7 @@ export default class InputForm extends Component {
                                     name="needleValue"
                                     variant="outlined"
                                     label="Needle"
-                                    value={this.props.needleValue}
+                                    value={this.props.needleValue.toUpperCase()}
                                     onChange={this.handleChange}
                                 ></TextField>
                             </FormControl>
