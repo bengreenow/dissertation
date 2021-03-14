@@ -22,8 +22,8 @@ class App extends React.Component {
             haystackValue: "ABBBABA",
             dropdownFields: [
                 "Naive Search",
-                "Knuth-Morris-Pratt",
-                "Boyer-Moore",
+                // "Knuth-Morris-Pratt",
+                // "Boyer-Moore",
             ],
 
             sliderValue: 1,
@@ -33,6 +33,7 @@ class App extends React.Component {
             stepCurrent: 0,
             stepArray: naiveSearch("ABA", "ABBBABA"),
             isPlaying: false,
+            notImplemented: false,
         };
 
         // used to map the name of each algorithm to their respective helper functions
@@ -115,15 +116,21 @@ class App extends React.Component {
             result: [this.state.haystackValue.search(this.state.needleValue)],
         }));
 
-        const s = this.functionMap[this.state.radioValue](
-            this.state.needleValue.toUpperCase(),
-            this.state.haystackValue.toUpperCase()
-        );
-        console.log(s, "s");
+        try {
+            const s = this.functionMap[this.state.radioValue](
+                this.state.needleValue.toUpperCase(),
+                this.state.haystackValue.toUpperCase()
+            );
+            this.setState((prevState) => ({
+                stepArray: s,
+                notImplemented: false,
+            }));
+        } catch {
+            this.setState({
+                notImplemented: true,
+            });
+        }
 
-        this.setState((prevState) => ({
-            stepArray: s,
-        }));
         event.preventDefault();
     }
 
