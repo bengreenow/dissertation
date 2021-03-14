@@ -120,8 +120,11 @@ class App extends React.Component {
                     <Grid item xs={12} sm={8}>
                         <AnimationCanvas
                             stepArray={this.state.stepArray}
+                            needle={this.state.needleValue.toUpperCase()}
+                            haystack={this.state.haystackValue.toUpperCase()}
                             result={this.state.result}
                             theme={this.theme}
+                            slider={this.state.sliderValue}
                         ></AnimationCanvas>
                     </Grid>
                     <Grid item xs={12} sm={4}>
