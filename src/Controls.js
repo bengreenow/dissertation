@@ -2,7 +2,6 @@ import {
     Grid,
     IconButton,
     LinearProgress,
-    makeStyles,
     Paper,
     Slider,
     Typography,

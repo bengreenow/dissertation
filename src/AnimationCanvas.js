@@ -3,8 +3,6 @@ import { motion } from "framer-motion";
 import React, { Component } from "react";
 import Character from "./Character";
 
-const OFFSET_SCALE = 10;
-
 export default class AnimationCanvas extends Component {
     constructor(props) {
         super(props);
