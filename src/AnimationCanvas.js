@@ -2,6 +2,7 @@ import { Paper } from "@material-ui/core";
 import { motion } from "framer-motion";
 import React, { Component } from "react";
 import Character from "./Character";
+// TODO: May need to make the character array first, then mutate, instead of mapping every step
 
 export default class AnimationCanvas extends Component {
     constructor(props) {
@@ -11,7 +12,7 @@ export default class AnimationCanvas extends Component {
             value: "",
         };
 
-        console.log(this.props.stepArray, "canvas");
+        // console.log(this.props.stepArray, "canvas");
     }
 
     render() {
@@ -31,16 +32,17 @@ export default class AnimationCanvas extends Component {
                         this.props.stepArray[this.props.stepIndex].needleOffset}
                 </div>
                 <div>
-                    {console.log(
+                    {/* {console.log(
                         this.props.stepArray[this.props.stepIndex],
                         "steparray"
-                    )}
+                    )} */}
                     {this.props.stepArray[this.props.stepIndex].haystack.map(
                         (char, i) => {
                             // value = {char="x" highlight=false}
                             return (
                                 <Character
                                     value={char.char}
+                                    key={i + char + "haystack"}
                                     highlight={char.highlight}
                                     className="haystack"
                                 ></Character>
@@ -67,6 +69,7 @@ export default class AnimationCanvas extends Component {
                             return (
                                 <Character
                                     className="needle"
+                                    key={i + char + "needle"}
                                     value={char.char}
                                     highlight={char.highlight}
                                 ></Character>

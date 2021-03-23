@@ -77,7 +77,7 @@ class App extends React.Component {
                         prevState.stepArray.length - 1
                     ),
                 }));
-                console.log(event);
+                // console.log(event);
                 break;
             case "prev":
                 this.setState((prevState) => ({
@@ -91,20 +91,20 @@ class App extends React.Component {
                 console.log("this should not have happened", event);
                 break;
         }
-        console.log(
-            this.state.stepIndex,
-            "i",
-            this.state.stepArray.length,
-            "array length"
-        );
-        console.log(
-            scale(this.state.stepIndex, 0, this.state.stepArray.length, 0, 100),
-            "percent"
-        );
+        // console.log(
+        //     this.state.stepIndex,
+        //     "i",
+        //     this.state.stepArray.length,
+        //     "array length"
+        // );
+        // console.log(
+        //     scale(this.state.stepIndex, 0, this.state.stepArray.length, 0, 100),
+        //     "percent"
+        // );
     }
 
     handleSliderChange(event, newValue) {
-        console.log(this.state);
+        // console.log(this.state);
         this.setState({
             sliderValue: newValue,
         });
@@ -114,6 +114,7 @@ class App extends React.Component {
         event.preventDefault();
         this.setState((prevState) => ({
             result: [this.state.haystackValue.search(this.state.needleValue)],
+            stepIndex: 0,
         }));
 
         try {
