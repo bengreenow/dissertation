@@ -91,8 +91,8 @@ class Controls extends Component {
                         <Slider
                             step={0.05}
                             value={this.props.sliderValue}
-                            min={0.1}
-                            max={5}
+                            min={0.25}
+                            max={1.5}
                             onChange={this.handleSliderChange} // change to "onChange" to trade performance for responsiveness
                         ></Slider>
                     </Grid>

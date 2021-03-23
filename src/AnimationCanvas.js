@@ -28,8 +28,6 @@ export default class AnimationCanvas extends Component {
             >
                 <div style={{ width: "100%", marginBottom: "1em" }}>
                     {this.props.stepIndex + 1}/{this.props.stepArray.length}
-                    {" " +
-                        this.props.stepArray[this.props.stepIndex].needleOffset}
                 </div>
                 <div>
                     {/* {console.log(

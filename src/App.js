@@ -10,6 +10,7 @@ import Controls from "./Controls";
 const scale = (num, in_min, in_max, out_min, out_max) => {
     return ((num - in_min) * (out_max - out_min)) / (in_max - in_min) + out_min;
 };
+const BASE_DURATION = 500;
 
 class App extends React.Component {
     constructor(props) {
@@ -28,7 +29,7 @@ class App extends React.Component {
 
             sliderValue: 1,
             code: "test",
-            stepDuration: 300,
+            stepDuration: BASE_DURATION,
             stepIndex: 0,
             stepCurrent: 0,
             stepArray: naiveSearch("ABA", "ABBBABA"),
@@ -48,6 +49,11 @@ class App extends React.Component {
         this.handlePlayPause = this.handlePlayPause.bind(this);
         this.handleSliderChange = this.handleSliderChange.bind(this);
         this.handleControlChange = this.handleControlChange.bind(this);
+        this.nextStep = this.nextStep.bind(this);
+        this.prevStep = this.prevStep.bind(this);
+        this.onInterval = this.onInterval.bind(this);
+
+        this.interval = undefined; // place to store interval object
 
         this.theme = createMuiTheme({
             spacing: 8,
@@ -62,52 +68,92 @@ class App extends React.Component {
         });
     }
 
+    componentDidUpdate(prevProps, prevState) {
+        // When stepduration changes, cancel current interval and create new one with new duration
+        if (
+            prevState.stepDuration !== this.state.stepDuration &&
+            this.state.isPlaying
+        ) {
+            // new duration detected
+
+            clearInterval(this.interval);
+            this.interval = setInterval(
+                this.onInterval,
+                this.state.stepDuration
+            );
+        }
+
+        if (prevState.isPlaying && !this.state.isPlaying) {
+            // was playing, not anymore
+            clearInterval(this.interval);
+        } else if (!prevState.isPlaying && this.state.isPlaying) {
+            // started playing
+            this.interval = setInterval(
+                this.onInterval,
+                this.state.stepDuration
+            );
+        }
+    }
+
     handlePlayPause() {
         this.setState((prevState) => ({
             isPlaying: !prevState.isPlaying,
         }));
+        console.log(this.interval);
     }
 
     handleControlChange(event) {
         switch (event) {
             case "next":
-                this.setState((prevState) => ({
-                    stepIndex: Math.min(
-                        prevState.stepIndex + 1,
-                        prevState.stepArray.length - 1
-                    ),
-                }));
+                console.log(this.nextStep());
                 // console.log(event);
                 break;
             case "prev":
-                this.setState((prevState) => ({
-                    stepIndex: Math.max(prevState.stepIndex - 1, 0),
-                }));
+                this.prevStep();
                 break;
             case "reset":
-                this.setState({ stepIndex: 0 });
+                this.setState({ stepIndex: 0, isPlaying: false });
                 break;
             default:
                 console.log("this should not have happened", event);
                 break;
         }
-        // console.log(
-        //     this.state.stepIndex,
-        //     "i",
-        //     this.state.stepArray.length,
-        //     "array length"
-        // );
-        // console.log(
-        //     scale(this.state.stepIndex, 0, this.state.stepArray.length, 0, 100),
-        //     "percent"
-        // );
+    }
+
+    onInterval(i) {
+        console.log("Interval done!", i);
+        this.nextStep();
+
+        if (this.state.stepIndex === this.state.stepArray.length - 1) {
+            this.setState({
+                isPlaying: false,
+            });
+            clearInterval(this.interval);
+        }
+    }
+
+    nextStep() {
+        this.setState((prevState) => ({
+            stepIndex: Math.min(
+                prevState.stepIndex + 1,
+                prevState.stepArray.length - 1
+            ),
+        }));
+    }
+
+    prevStep() {
+        this.setState((prevState) => ({
+            stepIndex: Math.max(prevState.stepIndex - 1, 0),
+        }));
     }
 
     handleSliderChange(event, newValue) {
         // console.log(this.state);
-        this.setState({
+        this.setState((prev) => ({
             sliderValue: newValue,
-        });
+            stepDuration: BASE_DURATION / newValue,
+        }));
+        console.log(this.state.stepDuration, newValue);
     }
 
     handleSubmit(event) {
@@ -131,7 +177,7 @@ class App extends React.Component {
                 notImplemented: true,
             });
         }
-
+        // setInterval(this.nextStep, this.state.stepDuration);
         event.preventDefault();
     }
 
