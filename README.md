@@ -7,4 +7,5 @@
 -   [ ] Implement algorithms
 -   [ ] More verbose highlight functionality (color)
 -   [ ] Descriptions
--   [ ] Code
+-   [x] Code
+    -   [ ] Fix pseudocode
