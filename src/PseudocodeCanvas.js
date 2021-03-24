@@ -5,7 +5,6 @@ import {
     ListItemIcon,
     ListItemText,
     Paper,
-    Typography,
 } from "@material-ui/core";
 import React, { Component } from "react";
 
