@@ -1,3 +1,9 @@
+:root{
+    --primary-color: #3f51b5;
+} 
+
+
+ 
  .letter{
     font-family: 'Courier New', Courier, monospace;
     font-size: 1.4em;
@@ -8,18 +14,46 @@
     margin: 0 0 0 0.3em;
 }
 
+
 .needle{
-    color:#3f51b5;
+    color: var(--primary-color);
+    margin-bottom: 10px;
 
 
 }
 
-/* .haystack{
+.haystack{
+/* padding-bottom: 10px; */
+margin-bottom: 7px;
 
-} */
+}
+/* TODO add media queries for font size */
+pre{ 
+    font-size: 1rem;
+    padding-left: 0.3rem;
+}
+
+.code-highlight{
+    background-color: var(--primary-color);
+    color: white;
+    border-radius: 3px;
+    transition: all 0.2s ease-in-out;
+}
+
+.code{
+    transition: all 0.2s ease-in-out;
+}
 
 .highlight{
-    background-color: #3f51b5;
+    background-color: var(--primary-color);
     border-radius: 10px;
     color:white;
+}
+.highlight-outline{
+    background-color: white;
+    border-radius: 10px;
+    border-width: 3px;
+    border-color: var(--primary-color);
+    border-style: solid;
+    color:var(--primary-color);
 }

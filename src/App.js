@@ -219,7 +219,7 @@ class App extends React.Component {
                             )}
                         ></Controls>
                     </Grid>
-                    <Grid item xs={12} sm={8}>
+                    <Grid item xs={12} sm={12}>
                         <AnimationCanvas
                             stepArray={this.state.stepArray}
                             stepIndex={this.state.stepIndex}
@@ -230,10 +230,16 @@ class App extends React.Component {
                             slider={this.state.sliderValue}
                         ></AnimationCanvas>
                     </Grid>
-                    <Grid item xs={12} sm={4}>
+                    <Grid item xs={12} sm={6}>
                         <PseudocodeCanvas
                             theme={this.theme}
-                            code={this.state.code}
+                            code={
+                                this.state.stepArray[this.state.stepIndex].code
+                            }
+                            lines={
+                                this.state.stepArray[this.state.stepIndex]
+                                    .codeLines
+                            }
                         ></PseudocodeCanvas>
                     </Grid>
                 </Grid>

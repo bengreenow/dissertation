@@ -51,9 +51,10 @@ function createStep(
     needleHighlightArray,
     haystackHighlightArray,
     description = "No Description",
-    codeLine = 0,
+    codeLines = [0],
     extra = {}
 ) {
+    console.log(codeLines, "codelines");
     let initialStep = {
         haystack: haystack.split("").map((char) => {
             return { char: char, highlight: false };
@@ -63,8 +64,30 @@ function createStep(
         }),
         needleOffset: needleOffset,
         found: false,
+        codeLines: codeLines,
+        description: description,
+
+        code: {
+            code: `for i in range(N - M + 1):
+    j = 0
+    while(j < M):
+        if (txt[i + j] != pat[j]):
+            break
+        j += 1
+    if (j == M): 
+        print("Pattern found at index ", i)
+    `,
+            legend: [
+                { name: "M", description: "Length of the haystack" },
+                { name: "N", description: "length of the needle" },
+                { name: "pat", description: "needle" },
+                { name: "txt", description: "haystack" },
+            ],
+        },
         ...extra,
     };
+
+    // console.log(initialStep.codeLines);
     if (haystackHighlightArray) {
         initialStep.haystack = initialStep.haystack.map((char, i) => {
             if (haystackHighlightArray.includes(i)) {
@@ -75,11 +98,11 @@ function createStep(
         });
     }
     if (needleHighlightArray) {
-        console.log("if needlehighligharray");
+        // console.log("if needlehighligharray");
         initialStep.needle = initialStep.needle.map((char, i) => {
-            console.log(needleHighlightArray);
+            // console.log(needleHighlightArray);
             if (needleHighlightArray.includes(i)) {
-                console.log({ ...char, highlight: true });
+                // console.log({ ...char, highlight: true });
                 return { ...char, highlight: true };
             } else {
                 return char;
@@ -109,29 +132,42 @@ export function naiveSearch(needle, haystack) {
         // runs through word
 
         let highlightArray = [];
-        stepOutput.push(createStep(needle, haystack, i, [0], [i]));
+        stepOutput.push(createStep(needle, haystack, i, [0], [i], "", []));
         while (j < M) {
             if (haystack[i + j] !== needle[j]) {
                 // runs when character NOT found. i.e "change needleoffset now if character found"
+                // add step?
                 break;
             }
             j++; // char is correct, go to next in needle
             highlightArray = [];
             for (let n = 0; n < j; n++) {
+                highlightArray.push(0);
                 highlightArray.push(n + 1);
-                console.log(highlightArray, "inside loop");
+                // console.log(highlightArray, "inside loop");
             }
             stepOutput.push(
                 createStep(needle, haystack, i, highlightArray, [])
             );
         }
         if (j === M) {
-            console.log("found at index" + i);
-            createStep(needle, haystack, i, highlightArray, [], "", 0, {
-                found: true,
-            });
+            // console.log("found at index" + i);
+            stepOutput.push(
+                createStep(
+                    needle,
+                    haystack,
+                    i,
+                    highlightArray,
+                    [],
+                    `The amount of comparisons made in the needle matches the length of the length of the needle, meaning all characters have been checked and match, thus, the index is found`,
+                    [6, 7],
+                    {
+                        found: true,
+                    }
+                )
+            );
         }
-        console.log(i);
+        // console.log(i);
     }
 
     console.log(stepOutput, "STEPS");

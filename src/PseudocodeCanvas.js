@@ -1,4 +1,12 @@
-import { Paper } from "@material-ui/core";
+import {
+    Divider,
+    List,
+    ListItem,
+    ListItemIcon,
+    ListItemText,
+    Paper,
+    Typography,
+} from "@material-ui/core";
 import React, { Component } from "react";
 
 export default class PseudocodeCanvas extends Component {
@@ -12,9 +20,37 @@ export default class PseudocodeCanvas extends Component {
                 elevation={3}
                 // variant="outlined"
             >
-                <pre>
-                    <code>{this.props.code}</code>
-                </pre>
+                <div>
+                    {this.props.code.code.split("\n").map((line, i) => (
+                        <pre
+                            className={
+                                this.props.lines.includes(i)
+                                    ? "code-highlight"
+                                    : "code"
+                            }
+                        >
+                            {line}
+                        </pre>
+                    ))}
+                </div>
+
+                <Divider></Divider>
+                {/* <Typography style={{ marginTop: "1em" }}>Legend</Typography> */}
+                <List>
+                    {this.props.code.legend.map((key) => (
+                        <ListItem>
+                            <ListItemIcon
+                                style={{
+                                    fontFamily: "monospace",
+                                }}
+                            >
+                                {key.name}
+                            </ListItemIcon>
+                            <ListItemText>{key.description}</ListItemText>
+                            {/* {key.name + " " + key.description} */}
+                        </ListItem>
+                    ))}
+                </List>
             </Paper>
         );
     }
