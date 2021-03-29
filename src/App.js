@@ -6,6 +6,7 @@ import AnimationCanvas from "./AnimationCanvas";
 import { naiveSearch } from "./algos/naive.js";
 import PseudocodeCanvas from "./PseudocodeCanvas";
 import Controls from "./Controls";
+import StepDescriptionCanvas from "./StepDescriptionCanvas";
 
 const scale = (num, in_min, in_max, out_min, out_max) => {
     return ((num - in_min) * (out_max - out_min)) / (in_max - in_min) + out_min;
@@ -230,7 +231,7 @@ class App extends React.Component {
                             slider={this.state.sliderValue}
                         ></AnimationCanvas>
                     </Grid>
-                    <Grid item xs={12} sm={6}>
+                    <Grid item xs={12} sm={7}>
                         <PseudocodeCanvas
                             theme={this.theme}
                             code={
@@ -241,6 +242,13 @@ class App extends React.Component {
                                     .codeLines
                             }
                         ></PseudocodeCanvas>
+                    </Grid>
+                    <Grid item xs={12} sm={5}>
+                        <StepDescriptionCanvas
+                            stepArray={this.state.stepArray}
+                            stepIndex={this.state.stepIndex}
+                            theme={this.theme}
+                        ></StepDescriptionCanvas>
                     </Grid>
                 </Grid>
             </div>
