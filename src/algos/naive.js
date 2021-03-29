@@ -75,8 +75,7 @@ function createStep(
             break
         j += 1
     if (j == M): 
-        print("Pattern found at index ", i)
-    `,
+        print("Pattern found at index ", i)`,
             legend: [
                 { name: "M", description: "Length of the haystack" },
                 { name: "N", description: "length of the needle" },

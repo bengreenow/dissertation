@@ -38,10 +38,14 @@ pre{
     color: white;
     border-radius: 3px;
     transition: all 0.2s ease-in-out;
+    margin-top: 0.7rem;
+    margin-bottom: 0.7rem;
 }
 
 .code{
     transition: all 0.2s ease-in-out;
+    margin-top: 0.7rem;
+    margin-bottom: 0.7rem;
 }
 
 .highlight{
