@@ -7,38 +7,35 @@ export default class Character extends Component {
 
         this.state = {};
         // console.log(this.props.highlight, "HIGHLIGHT");
+        // this.updateClasses();
+    }
+
+    // componentDidUpdate(oldProps) {
+    //     this.updateClasses();
+    // }
+
+    updateClasses() {
         this.classes = this.props.className + " letter";
-    }
-
-    componentDidUpdate(oldProps) {
-        // console.log(oldProps);
-    }
-
-    createStyles() {
         if (this.props.highlight) {
-            return {
-                color: "red",
-                backgroundColor: "blue",
-            };
-        } else {
-            return {
-                color: "blue",
-                backgroundColor: "white",
-            };
+            this.classes += " highlight";
+        }
+        if (this.props.correct) {
+            this.classes += " correct";
+            console.log(this.props.correct);
+        }
+        if (this.props.incorrect) {
+            this.classes += " incorrect";
         }
     }
 
     render() {
+        console.log(this.classes);
+        this.updateClasses();
         return (
             <motion.span
                 // animate={this.createStyles()}
                 transition={{ ease: "easeInOut", duration: "10s" }}
-                className={
-                    // this.classes
-                    this.props.highlight
-                        ? `${this.classes} highlight`
-                        : this.classes
-                }
+                className={this.classes}
             >
                 {this.props.value}
             </motion.span>

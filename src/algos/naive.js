@@ -85,6 +85,11 @@ function createStep(
         },
         ...extra,
     };
+    editCharacterStates(
+        initialStep.haystack,
+        haystackHighlightArray,
+        "highlight"
+    );
 
     // console.log(initialStep.codeLines);
     if (haystackHighlightArray) {
@@ -110,6 +115,25 @@ function createStep(
     }
     return initialStep;
 }
+function editCharacterStates(
+    charArray, // the array of characters to change. [{char}, {char}]
+    editArray, // the array of character indexes to edit [1,4]
+    field, // the feild of the character object to change "highlight"
+    value = true // value to change the feild to "true"
+) {
+    // console.log("if needlehighligharray");
+    // charArray.map((char, i) => {
+    //     // console.log(needleHighlightArray);
+    //     if (highlightArray.includes(i)) {
+    //         // console.log({ ...char, highlight: true });
+    //         return { ...char, highlight: true };
+    //     } else {
+    //         return char;
+    //     }
+    // });
+
+    editArray.forEach((i) => {});
+}
 
 export function naiveSearch(needle, haystack) {
     // let initialStep = {
@@ -131,7 +155,7 @@ export function naiveSearch(needle, haystack) {
         // runs through word
 
         let highlightArray = [];
-        stepOutput.push(createStep(needle, haystack, i, [0], [i], "", []));
+        stepOutput.push(createStep(needle, haystack, i, [0], [i], "", [], {}));
         while (j < M) {
             if (haystack[i + j] !== needle[j]) {
                 // runs when character NOT found. i.e "change needleoffset now if character found"

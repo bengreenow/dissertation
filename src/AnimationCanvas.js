@@ -42,6 +42,7 @@ export default class AnimationCanvas extends Component {
                                     value={char.char}
                                     key={i + char + "haystack"}
                                     highlight={char.highlight}
+                                    correct={char.correct}
                                     className="haystack"
                                 ></Character>
                             );
@@ -70,6 +71,7 @@ export default class AnimationCanvas extends Component {
                                     key={i + char + "needle"}
                                     value={char.char}
                                     highlight={char.highlight}
+                                    correct={char.correct}
                                 ></Character>
                             );
                         }

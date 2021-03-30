@@ -61,3 +61,6 @@ pre{
     border-style: solid;
     color:var(--primary-color);
 }
+.correct {
+    color: red;
+}
