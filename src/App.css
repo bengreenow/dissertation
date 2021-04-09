@@ -43,7 +43,6 @@ pre{
 }
 
 .code{
-    transition: all 0.2s ease-in-out;
     margin-top: 0.7rem;
     margin-bottom: 0.7rem;
 }
@@ -62,5 +61,10 @@ pre{
     color:var(--primary-color);
 }
 .correct {
-    color: red;
+    background-color:#4CAF50 ;
+    color: white;
+}
+.incorrect{
+    background-color: #f44336;
+    color: white;
 }
