@@ -191,6 +191,7 @@ export function naiveSearch(needle, haystack) {
                     }
                 )
             );
+            break;
         }
         // console.log(i);
     }
