@@ -132,7 +132,9 @@ function editCharacterStates(
     //     }
     // });
 
-    editArray.forEach((i) => {});
+    editArray.forEach((i) => {
+        charArray[i][field] = value; // char[1][highlight]
+    });
 }
 
 export function naiveSearch(needle, haystack) {
