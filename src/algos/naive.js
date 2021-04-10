@@ -164,11 +164,7 @@ export function naiveSearch(needle, haystack) {
                 // console.log(highlightArray, "inside loop");
             }
             let step = createStep(needle, haystack, i, highlightArray, []);
-            step.needle = editCharacterStates(
-                step.needle,
-                [0, 1, 2],
-                "correct"
-            );
+            step.needle = editCharacterStates(step.needle, [], "correct"); // TODO add correct highlighting
             console.log(step, "step");
             stepOutput.push(step);
         }
