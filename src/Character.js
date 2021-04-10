@@ -29,8 +29,8 @@ export default class Character extends Component {
     }
 
     render() {
-        console.log(this.classes);
         this.updateClasses();
+        console.log(this.classes);
         return (
             <motion.span
                 // animate={this.createStyles()}

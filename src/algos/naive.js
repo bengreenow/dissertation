@@ -150,7 +150,15 @@ export function naiveSearch(needle, haystack) {
         // runs through word
 
         let highlightArray = [];
-        stepOutput.push(createStep(needle, haystack, i, [0], [i], "", [], {}));
+        stepOutput.push(createStep(needle, haystack, i, [0], [i], "", [], {})); // comparison
+        let step = createStep(needle, haystack, i, [0], [], "", [], {});
+        step.haystack = editCharacterStates(
+            step.haystack,
+            [1, 2, 3],
+            "incorrect"
+        );
+        console.log(step, "step incorrect");
+        stepOutput.push(step);
         while (j < M) {
             if (haystack[i + j] !== needle[j]) {
                 // runs when character NOT found. i.e "change needleoffset now if character found"
@@ -165,7 +173,7 @@ export function naiveSearch(needle, haystack) {
             }
             let step = createStep(needle, haystack, i, highlightArray, []);
             step.needle = editCharacterStates(step.needle, [], "correct"); // TODO add correct highlighting
-            console.log(step, "step");
+            // console.log(step, "step");
             stepOutput.push(step);
         }
         if (j === M) {
