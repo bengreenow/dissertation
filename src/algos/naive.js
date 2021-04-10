@@ -134,20 +134,13 @@ function editCharacterStates(
 
     editArray.forEach((i) => {
         charArray[i][field] = value; // char[1][highlight]
+        // console.log(charArray[i][field], field, "chararray");
     });
+    // console.log(charArray);
+    return charArray;
 }
 
 export function naiveSearch(needle, haystack) {
-    // let initialStep = {
-    //     haystack: haystack.split("").map((char) => {
-    //         return { char: char, highlight: false };
-    //     }),
-    //     needle: needle.split("").map((char, index) => {
-    //         return { char: char, highlight: false };
-    //     }),
-    //     needleOffset: 0,
-    // };
-
     let stepOutput = [];
     let M = needle.length;
     let N = haystack.length;
@@ -166,14 +159,18 @@ export function naiveSearch(needle, haystack) {
             }
             j++; // char is correct, go to next in needle
             highlightArray = [];
-            for (let n = 0; n < j; n++) {
-                highlightArray.push(0);
-                highlightArray.push(n + 1);
+            for (let n = 1; n < j; n++) {
+                highlightArray.push(n);
                 // console.log(highlightArray, "inside loop");
             }
-            stepOutput.push(
-                createStep(needle, haystack, i, highlightArray, [])
+            let step = createStep(needle, haystack, i, highlightArray, []);
+            step.needle = editCharacterStates(
+                step.needle,
+                [0, 1, 2],
+                "correct"
             );
+            console.log(step, "step");
+            stepOutput.push(step);
         }
         if (j === M) {
             // console.log("found at index" + i);
