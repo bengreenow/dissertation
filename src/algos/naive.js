@@ -151,22 +151,28 @@ export function naiveSearch(needle, haystack) {
 
         let highlightArray = [];
         stepOutput.push(createStep(needle, haystack, i, [0], [i], "", [], {})); // comparison
-        let step = createStep(needle, haystack, i, [0], [], "", [], {});
-        step.haystack = editCharacterStates(
-            step.haystack,
-            [1, 2, 3],
-            "incorrect"
-        );
-        console.log(step, "step incorrect");
-        stepOutput.push(step);
+
         while (j < M) {
             if (haystack[i + j] !== needle[j]) {
                 // runs when character NOT found. i.e "change needleoffset now if character found"
                 // add step?
+                let step = createStep(needle, haystack, i, [], [], "", [], {});
+                step.haystack = editCharacterStates(
+                    step.haystack,
+                    [i + j],
+                    "incorrect"
+                );
+                step.needle = editCharacterStates(
+                    step.needle,
+                    [j],
+                    "incorrect"
+                );
+                console.log(step, "step incorrect");
+                stepOutput.push(step);
                 break;
             }
             j++; // char is correct, go to next in needle
-            highlightArray = [];
+            highlightArray = [0];
             for (let n = 1; n < j; n++) {
                 highlightArray.push(n);
                 // console.log(highlightArray, "inside loop");

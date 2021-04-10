@@ -73,6 +73,7 @@ export default class AnimationCanvas extends Component {
                                     value={char.char}
                                     highlight={char.highlight}
                                     correct={char.correct}
+                                    incorrect={char.incorrect}
                                 ></Character>
                             );
                         }
