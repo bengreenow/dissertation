@@ -12,6 +12,7 @@
     display: inline-block;
     text-align: center;
     margin: 0 0 0 0.3em;
+    border-radius: 10px;
 }
 
 
@@ -36,7 +37,6 @@ pre{
 .code-highlight{
     background-color: var(--primary-color);
     color: white;
-    border-radius: 3px;
     transition: all 0.2s ease-in-out;
     margin-top: 0.7rem;
     margin-bottom: 0.7rem;
