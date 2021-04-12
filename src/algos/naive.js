@@ -149,7 +149,7 @@ export function naiveSearch(needle, haystack) {
                 i,
                 [j], // needle
                 [i + j], // haystack
-                "Moving the needle along to the next position in the haystack.",
+                "Moving the needle comparision pointer along to the next position in the haystack.",
                 [],
                 {}
             )
@@ -198,7 +198,9 @@ export function naiveSearch(needle, haystack) {
                 [],
                 `The character ${haystack[i + j]} at position ${
                     i + j
-                } in the haystack does!!! match the character at position ${j} in the needle`,
+                } in the haystack matches the character ${
+                    needle[j]
+                } at position ${j} in the needle`,
                 [],
                 {}
             );
@@ -228,7 +230,9 @@ export function naiveSearch(needle, haystack) {
                 i,
                 highlightArray,
                 [i + j],
-                ``
+                `Moving the needle's pointer along to compare the next characters, ${
+                    haystack[i + j]
+                } and ${needle[j]}`
             );
             step.needle = editCharacterStates(step.needle, [], "correct"); // TODO add correct highlighting
             // console.log(step, "step");
