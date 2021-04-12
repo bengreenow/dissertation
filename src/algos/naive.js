@@ -75,7 +75,7 @@ function createStep(
             break
         j += 1
     if (j == M): 
-        print("Pattern found at index ", i)`,
+        return i`,
             legend: [
                 { name: "M", description: "Length of the haystack" },
                 { name: "N", description: "length of the needle" },
@@ -150,13 +150,35 @@ export function naiveSearch(needle, haystack) {
         // runs through word
 
         let highlightArray = [];
-        stepOutput.push(createStep(needle, haystack, i, [0], [i], "", [], {})); // comparison
+        stepOutput.push(
+            createStep(
+                needle,
+                haystack,
+                i,
+                [0],
+                [i],
+                "Moving the needle along to the next position in the haystack.",
+                [],
+                {}
+            )
+        ); // comparison
 
         while (j < M) {
             if (haystack[i + j] !== needle[j]) {
                 // runs when character NOT found. i.e "change needleoffset now if character found"
                 // add step?
-                let step = createStep(needle, haystack, i, [], [], "", [], {});
+                let step = createStep(
+                    needle,
+                    haystack,
+                    i,
+                    [],
+                    [],
+                    `The character ${haystack[i + j]} at position ${
+                        i + j
+                    } in the haystack doesn't match the character at position ${j} in the needle`,
+                    [],
+                    {}
+                );
                 step.haystack = editCharacterStates(
                     step.haystack,
                     [i + j],

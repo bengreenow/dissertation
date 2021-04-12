@@ -51,6 +51,8 @@ pre{
     background-color: var(--primary-color);
     border-radius: 10px;
     color:white;
+    transition: background-color 0.1s linear;
+
 }
 .highlight-outline{
     background-color: white;
@@ -63,8 +65,12 @@ pre{
 .correct {
     background-color:#4CAF50 ;
     color: white;
+    transition: background-color 0.1s linear;
+
 }
 .incorrect{
     background-color: #f44336;
     color: white;
+    transition: background-color 0.1s linear;
+
 }
