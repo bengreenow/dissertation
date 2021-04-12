@@ -22,6 +22,7 @@ export default class PseudocodeCanvas extends Component {
                 <div>
                     {this.props.code.code.split("\n").map((line, i) => (
                         <pre
+                            key={line + i}
                             className={
                                 this.props.lines.includes(i)
                                     ? "code-highlight"
@@ -36,8 +37,8 @@ export default class PseudocodeCanvas extends Component {
                 <Divider></Divider>
                 {/* <Typography style={{ marginTop: "1em" }}>Legend</Typography> */}
                 <List>
-                    {this.props.code.legend.map((key) => (
-                        <ListItem>
+                    {this.props.code.legend.map((key, i) => (
+                        <ListItem key={i + "codeline"}>
                             <ListItemIcon
                                 style={{
                                     fontFamily: "monospace",
