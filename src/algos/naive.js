@@ -90,29 +90,30 @@ function createStep(
         haystackHighlightArray,
         "highlight"
     );
+    editCharacterStates(initialStep.needle, needleHighlightArray, "highlight");
 
-    // console.log(initialStep.codeLines);
-    if (haystackHighlightArray) {
-        initialStep.haystack = initialStep.haystack.map((char, i) => {
-            if (haystackHighlightArray.includes(i)) {
-                return { ...char, highlight: true };
-            } else {
-                return char;
-            }
-        });
-    }
-    if (needleHighlightArray) {
-        // console.log("if needlehighligharray");
-        initialStep.needle = initialStep.needle.map((char, i) => {
-            // console.log(needleHighlightArray);
-            if (needleHighlightArray.includes(i)) {
-                // console.log({ ...char, highlight: true });
-                return { ...char, highlight: true };
-            } else {
-                return char;
-            }
-        });
-    }
+    // // console.log(initialStep.codeLines);
+    // if (haystackHighlightArray) {
+    //     initialStep.haystack = initialStep.haystack.map((char, i) => {
+    //         if (haystackHighlightArray.includes(i)) {
+    //             return { ...char, highlight: true };
+    //         } else {
+    //             return char;
+    //         }
+    //     });
+    // }
+    // if (needleHighlightArray) {
+    //     // console.log("if needlehighligharray");
+    //     initialStep.needle = initialStep.needle.map((char, i) => {
+    //         // console.log(needleHighlightArray);
+    //         if (needleHighlightArray.includes(i)) {
+    //             // console.log({ ...char, highlight: true });
+    //             return { ...char, highlight: true };
+    //         } else {
+    //             return char;
+    //         }
+    //     });
+    // }
     return initialStep;
 }
 function editCharacterStates(
@@ -121,22 +122,12 @@ function editCharacterStates(
     field, // the feild of the character object to change "highlight"
     value = true // value to change the feild to "true"
 ) {
-    // console.log("if needlehighligharray");
-    // charArray.map((char, i) => {
-    //     // console.log(needleHighlightArray);
-    //     if (highlightArray.includes(i)) {
-    //         // console.log({ ...char, highlight: true });
-    //         return { ...char, highlight: true };
-    //     } else {
-    //         return char;
-    //     }
-    // });
-
+    console.log(charArray);
     editArray.forEach((i) => {
-        charArray[i][field] = value; // char[1][highlight]
-        // console.log(charArray[i][field], field, "chararray");
+        if (charArray[i]) {
+            charArray[i][field] = value;
+        } // char[1][highlight]
     });
-    // console.log(charArray);
     return charArray;
 }
 
@@ -149,14 +140,15 @@ export function naiveSearch(needle, haystack) {
         let j = 0;
         // runs through word
 
+        let haystackCorrectArray = [];
         let highlightArray = [];
         stepOutput.push(
             createStep(
                 needle,
                 haystack,
                 i,
-                [0],
-                [i],
+                [j], // needle
+                [i + j], // haystack
                 "Moving the needle along to the next position in the haystack.",
                 [],
                 {}
@@ -171,7 +163,7 @@ export function naiveSearch(needle, haystack) {
                     needle,
                     haystack,
                     i,
-                    [],
+                    [], // should still be highlight
                     [],
                     `The character ${haystack[i + j]} at position ${
                         i + j
@@ -183,6 +175,11 @@ export function naiveSearch(needle, haystack) {
                     step.haystack,
                     [i + j],
                     "incorrect"
+                );
+                step.haystack = editCharacterStates(
+                    step.haystack,
+                    [...Array(i + j + 1).keys()].slice(i, i + j + 1),
+                    "correct"
                 );
                 step.needle = editCharacterStates(
                     step.needle,
@@ -197,19 +194,20 @@ export function naiveSearch(needle, haystack) {
                 needle,
                 haystack,
                 i,
-                [],
+                [], // on correct, should still be highlighted
                 [],
                 `The character ${haystack[i + j]} at position ${
                     i + j
-                } in the haystack doesn't match the character at position ${j} in the needle`,
+                } in the haystack does!!! match the character at position ${j} in the needle`,
                 [],
                 {}
             );
             stepCorrect.haystack = editCharacterStates(
                 stepCorrect.haystack,
-                [i + j],
+                [...Array(i + j + 1).keys()].slice(i, i + j + 1),
                 "correct"
             );
+            console.log([...Array(i + j + 1).keys()], i, j);
             stepCorrect.needle = editCharacterStates(
                 stepCorrect.needle,
                 [j],
@@ -218,14 +216,27 @@ export function naiveSearch(needle, haystack) {
             console.log(stepCorrect, "step incorrect");
             stepOutput.push(stepCorrect);
             j++; // char is correct, go to next in needle
-            highlightArray = [0];
-            for (let n = 1; n < j; n++) {
-                highlightArray.push(n);
+            for (let n = 0; n < j; n++) {
+                highlightArray = [j];
+                haystackCorrectArray.push(j + i - 1);
                 // console.log(highlightArray, "inside loop");
             }
-            let step = createStep(needle, haystack, i, highlightArray, []);
+
+            let step = createStep(
+                needle,
+                haystack,
+                i,
+                highlightArray,
+                [i + j],
+                ``
+            );
             step.needle = editCharacterStates(step.needle, [], "correct"); // TODO add correct highlighting
             // console.log(step, "step");
+            step.haystack = editCharacterStates(
+                step.haystack,
+                haystackCorrectArray,
+                "correct"
+            );
             stepOutput.push(step);
         }
         if (j === M) {
