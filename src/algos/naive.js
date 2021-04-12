@@ -193,6 +193,30 @@ export function naiveSearch(needle, haystack) {
                 stepOutput.push(step);
                 break;
             }
+            let stepCorrect = createStep(
+                needle,
+                haystack,
+                i,
+                [],
+                [],
+                `The character ${haystack[i + j]} at position ${
+                    i + j
+                } in the haystack doesn't match the character at position ${j} in the needle`,
+                [],
+                {}
+            );
+            stepCorrect.haystack = editCharacterStates(
+                stepCorrect.haystack,
+                [i + j],
+                "correct"
+            );
+            stepCorrect.needle = editCharacterStates(
+                stepCorrect.needle,
+                [j],
+                "correct"
+            );
+            console.log(stepCorrect, "step incorrect");
+            stepOutput.push(stepCorrect);
             j++; // char is correct, go to next in needle
             highlightArray = [0];
             for (let n = 1; n < j; n++) {
