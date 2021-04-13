@@ -7,6 +7,7 @@ import {
     InputLabel,
     Select,
 } from "@material-ui/core";
+import { Alert } from "@material-ui/lab";
 import React, { Component } from "react";
 
 export default class InputForm extends Component {
@@ -39,6 +40,17 @@ export default class InputForm extends Component {
             >
                 <form onSubmit={this.handleSubmit}>
                     <Grid container spacing={3}>
+                        {this.props.alert ? (
+                            <Grid item xs={12}>
+                                <Alert severity="error">
+                                    The needle can't be longer that the
+                                    haystack.
+                                </Alert>
+                            </Grid>
+                        ) : (
+                            ""
+                        )}
+
                         <Grid item xs={12} sm={5}>
                             <FormControl fullWidth>
                                 <TextField

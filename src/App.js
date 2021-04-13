@@ -159,6 +159,17 @@ class App extends React.Component {
 
     handleSubmit(event) {
         event.preventDefault();
+
+        if (this.state.needleValue.length > this.state.haystackValue.length) {
+            // needle too long
+            this.setState((prevState) => ({
+                popover: true,
+            }));
+            return; // don't continue with submission
+        } else {
+            this.setState({ popover: false });
+        }
+
         this.setState((prevState) => ({
             result: [this.state.haystackValue.search(this.state.needleValue)],
             stepIndex: 0,
@@ -166,6 +177,7 @@ class App extends React.Component {
 
         try {
             const s = this.functionMap[this.state.radioValue](
+                // function call
                 this.state.needleValue.toUpperCase(),
                 this.state.haystackValue.toUpperCase()
             );
@@ -201,6 +213,7 @@ class App extends React.Component {
                     radioValue={this.state.radioValue}
                     dropdownFields={this.state.dropdownFields}
                     theme={this.theme}
+                    alert={this.state.popover}
                 />
                 <Grid container spacing={0}>
                     <Grid item xs={12}>
