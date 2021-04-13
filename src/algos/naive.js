@@ -154,6 +154,7 @@ export function naiveSearch(needle, haystack) {
     let stepOutput = [];
     let M = needle.length;
     let N = haystack.length;
+    let found = false;
 
     for (let i = 0; i < N - M + 1; i++) {
         let j = 0;
@@ -262,6 +263,7 @@ export function naiveSearch(needle, haystack) {
                         { j: j }
                     )
                 );
+                found = true;
                 break;
             }
             let step = createStep(
@@ -284,8 +286,19 @@ export function naiveSearch(needle, haystack) {
                 haystackCorrectArray,
                 "correct"
             );
+
             stepOutput.push(step);
         }
+    }
+
+    if (!found) {
+        stepOutput = stepOutput.concat({
+            ...stepOutput[stepOutput.length - 1],
+            notFound: true,
+            description:
+                "The loop has run it's course and no matches have been found. We know the needle is not in the haystack",
+        });
+        console.log("END NOT FOUND");
     }
 
     console.log(stepOutput, "STEPS");

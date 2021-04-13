@@ -23,6 +23,14 @@ export default class AnimationCanvas extends Component {
                     margin: this.props.theme.spacing(1),
                     overflow: "hidden",
                 }}
+                className={
+                    this.props.stepArray[this.props.stepIndex].found
+                        ? "found"
+                        : "" ||
+                          this.props.stepArray[this.props.stepIndex].notFound
+                        ? "not-found"
+                        : ""
+                }
                 height="100%"
                 elevation={3}
             >
