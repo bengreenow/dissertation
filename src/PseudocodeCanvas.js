@@ -47,10 +47,10 @@ export default class PseudocodeCanvas extends Component {
                             >
                                 {key.name}
                             </ListItemIcon>
+                            <ListItemText>{key.description}</ListItemText>
                             <ListItemSecondaryAction className="variable-value">
                                 {key.value}
                             </ListItemSecondaryAction>
-                            <ListItemText>{key.description}</ListItemText>
                             {/* {key.name + " " + key.description} */}
                         </ListItem>
                     ))}
