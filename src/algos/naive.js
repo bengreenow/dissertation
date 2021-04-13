@@ -80,13 +80,13 @@ function createStep(
             legend: [
                 {
                     name: "j",
-                    description: "Needle offset pointer",
-                    value: needleOffset,
+                    description: "Needle comparison pointer",
+                    value: values.j,
                 },
                 {
                     name: "i",
-                    description: "Needle comparison pointer",
-                    value: values.j,
+                    description: "Needle offset pointer",
+                    value: needleOffset,
                 },
                 {
                     name: "M",
