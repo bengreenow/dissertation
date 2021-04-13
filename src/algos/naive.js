@@ -77,10 +77,16 @@ function createStep(
     if (j == M): 
         return i`,
             legend: [
+                {
+                    name: "j",
+                    description: "Needle offset pointer",
+                    value: needleOffset,
+                },
+                { name: "i", description: "Needle comparison pointer" },
                 { name: "M", description: "Length of the haystack" },
                 { name: "N", description: "length of the needle" },
-                { name: "pat", description: "needle" },
-                { name: "txt", description: "haystack" },
+                { name: "pat", description: "Needle" },
+                { name: "txt", description: "Haystack" },
             ],
         },
         ...extra,
@@ -209,7 +215,6 @@ export function naiveSearch(needle, haystack) {
                 [...Array(i + j + 1).keys()].slice(i, i + j + 1),
                 "correct"
             );
-            console.log([...Array(i + j + 1).keys()], i, j);
             stepCorrect.needle = editCharacterStates(
                 stepCorrect.needle,
                 [j],
@@ -224,6 +229,24 @@ export function naiveSearch(needle, haystack) {
                 // console.log(highlightArray, "inside loop");
             }
 
+            if (j === M) {
+                // console.log("found at index" + i);
+                stepOutput.push(
+                    createStep(
+                        needle,
+                        haystack,
+                        i,
+                        highlightArray,
+                        [],
+                        `The amount of comparisons made in the needle (${j}) matches the length of the length of the needle (${M}), meaning all characters have been checked and match, thus, the index (${i}) is found`,
+                        [6, 7],
+                        {
+                            found: true,
+                        }
+                    )
+                );
+                break;
+            }
             let step = createStep(
                 needle,
                 haystack,
@@ -243,25 +266,6 @@ export function naiveSearch(needle, haystack) {
             );
             stepOutput.push(step);
         }
-        if (j === M) {
-            // console.log("found at index" + i);
-            stepOutput.push(
-                createStep(
-                    needle,
-                    haystack,
-                    i,
-                    highlightArray,
-                    [],
-                    `The amount of comparisons made in the needle matches the length of the length of the needle, meaning all characters have been checked and match, thus, the index is found`,
-                    [6, 7],
-                    {
-                        found: true,
-                    }
-                )
-            );
-            break;
-        }
-        // console.log(i);
     }
 
     console.log(stepOutput, "STEPS");
