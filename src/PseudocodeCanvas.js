@@ -3,6 +3,7 @@ import {
     List,
     ListItem,
     ListItemIcon,
+    ListItemSecondaryAction,
     ListItemText,
     Paper,
 } from "@material-ui/core";
@@ -46,6 +47,9 @@ export default class PseudocodeCanvas extends Component {
                             >
                                 {key.name}
                             </ListItemIcon>
+                            <ListItemSecondaryAction>
+                                {key.value}
+                            </ListItemSecondaryAction>
                             <ListItemText>{key.description}</ListItemText>
                             {/* {key.name + " " + key.description} */}
                         </ListItem>

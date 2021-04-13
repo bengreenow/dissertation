@@ -52,7 +52,8 @@ function createStep(
     haystackHighlightArray,
     description = "No Description",
     codeLines = [0],
-    extra = {}
+    extra = {},
+    values = {}
 ) {
     console.log(codeLines, "codelines");
     let initialStep = {
@@ -82,11 +83,23 @@ function createStep(
                     description: "Needle offset pointer",
                     value: needleOffset,
                 },
-                { name: "i", description: "Needle comparison pointer" },
-                { name: "M", description: "Length of the haystack" },
-                { name: "N", description: "length of the needle" },
-                { name: "pat", description: "Needle" },
-                { name: "txt", description: "Haystack" },
+                {
+                    name: "i",
+                    description: "Needle comparison pointer",
+                    value: values.j,
+                },
+                {
+                    name: "M",
+                    description: "Length of the haystack",
+                    value: haystack.length,
+                },
+                {
+                    name: "N",
+                    description: "length of the needle",
+                    value: needle.length,
+                },
+                { name: "pat", description: "Needle", value: needle },
+                { name: "txt", description: "Haystack", value: haystack },
             ],
         },
         ...extra,
@@ -157,7 +170,8 @@ export function naiveSearch(needle, haystack) {
                 [i + j], // haystack
                 "Moving the needle comparision pointer along to the next position in the haystack.",
                 [],
-                {}
+                {},
+                { j: j }
             )
         ); // comparison
 
@@ -175,7 +189,8 @@ export function naiveSearch(needle, haystack) {
                         i + j
                     } in the haystack doesn't match the character at position ${j} in the needle`,
                     [],
-                    {}
+                    {},
+                    { j: j }
                 );
                 step.haystack = editCharacterStates(
                     step.haystack,
@@ -208,7 +223,8 @@ export function naiveSearch(needle, haystack) {
                     needle[j]
                 } at position ${j} in the needle`,
                 [],
-                {}
+                {},
+                { j: j }
             );
             stepCorrect.haystack = editCharacterStates(
                 stepCorrect.haystack,
@@ -242,7 +258,8 @@ export function naiveSearch(needle, haystack) {
                         [6, 7],
                         {
                             found: true,
-                        }
+                        },
+                        { j: j }
                     )
                 );
                 break;
@@ -255,7 +272,10 @@ export function naiveSearch(needle, haystack) {
                 [i + j],
                 `Moving the needle's pointer along to compare the next characters, ${
                     haystack[i + j]
-                } and ${needle[j]}`
+                } and ${needle[j]}`,
+                [],
+                {},
+                { j: j }
             );
             step.needle = editCharacterStates(step.needle, [], "correct"); // TODO add correct highlighting
             // console.log(step, "step");
