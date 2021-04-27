@@ -1,6 +1,6 @@
 import "./App.css";
 import React from "react";
-import { createMuiTheme, Grid } from "@material-ui/core";
+import { createMuiTheme, Grid, Link, Paper } from "@material-ui/core";
 import InputForm from "./InputForm";
 import AnimationCanvas from "./AnimationCanvas";
 import { naiveSearch } from "./algos/naive.js";
@@ -262,6 +262,29 @@ class App extends React.Component {
                             stepIndex={this.state.stepIndex}
                             theme={this.theme}
                         ></StepDescriptionCanvas>
+                    </Grid>
+                    <Grid item xs={12} sm={12}>
+                        <Paper
+                            variant="outlined"
+                            style={{
+                                padding: this.theme.spacing(2),
+                                margin: this.theme.spacing(1),
+                                overflow: "hidden",
+                            }}
+                        >
+                            <Link
+                                href="https://forms.gle/kN8javMjN4zm1C5T9"
+                                target="_blank"
+                                style={{
+                                    height: "50px",
+                                    fontWeight: 600,
+                                    fontSize: "1.2em",
+                                }}
+                                rel="noopener"
+                            >
+                                User Study
+                            </Link>
+                        </Paper>
                     </Grid>
                 </Grid>
             </div>
