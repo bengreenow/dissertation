@@ -231,7 +231,7 @@ export function naiveSearch(needle, haystack) {
                         i,
                         highlightArray,
                         [],
-                        `The amount of comparisons made in the needle (${j}) matches the length of the length of the needle (${M}), meaning all characters have been checked and match, thus, the index (${i}) is found`,
+                        `The amount of comparisons made in the needle (${j}) matches the length of the needle (${M}), meaning all characters have been checked and match, thus, the index (${i}) is found`,
                         [6, 7],
                         {
                             found: true,
