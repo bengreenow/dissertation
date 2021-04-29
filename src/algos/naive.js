@@ -55,7 +55,6 @@ function createStep(
     extra = {},
     values = {}
 ) {
-    console.log(codeLines, "codelines");
     let initialStep = {
         haystack: haystack.split("").map((char) => {
             return { char: char, highlight: false };
@@ -118,7 +117,7 @@ function editCharacterStates(
     field, // the feild of the character object to change "highlight"
     value = true // value to change the feild to "true"
 ) {
-    console.log(charArray);
+    // console.log(charArray);
     editArray.forEach((i) => {
         if (charArray[i]) {
             charArray[i][field] = value;
@@ -213,7 +212,7 @@ export function naiveSearch(needle, haystack) {
                 [j],
                 "correct"
             );
-            console.log(stepCorrect, "step incorrect");
+            // console.log(stepCorrect, "step incorrect");
             stepOutput.push(stepCorrect);
             j++; // char is correct, go to next in needle
             for (let n = 0; n < j; n++) {
@@ -274,10 +273,10 @@ export function naiveSearch(needle, haystack) {
             description:
                 "The loop has run it's course and no matches have been found. We know the needle is not in the haystack",
         });
-        console.log("END NOT FOUND");
+        // console.log("END NOT FOUND");
     }
 
-    console.log(stepOutput, "STEPS");
+    // console.log(stepOutput, "STEPS");
 
     return stepOutput;
 }
