@@ -133,6 +133,7 @@ export function naiveSearch(needle, haystack) {
     let found = false;
 
     for (let i = 0; i < N - M + 1; i++) {
+        if (found) break;
         let j = 0;
         // runs through word
 
